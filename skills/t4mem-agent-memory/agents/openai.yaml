@@ -1,0 +1,7 @@
+interface:
+  display_name: "t4mem Agent Memory"
+  short_description: "Branchable memory for agent work."
+  default_prompt: "Use $t4mem-agent-memory to manage branchable, explainable memory during this task."
+
+policy:
+  allow_implicit_invocation: true
