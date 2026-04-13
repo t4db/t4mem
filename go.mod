@@ -1,4 +1,4 @@
-module t4mem
+module github.com/t4db/t4mem
 
 go 1.25.1
 

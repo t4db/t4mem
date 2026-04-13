@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"t4mem/memory"
+	"github.com/t4db/t4mem/memory"
 )
 
 func TestInitializeNegotiatesCurrentProtocol(t *testing.T) {

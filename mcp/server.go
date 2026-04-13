@@ -9,7 +9,7 @@ import (
 	"io"
 	"strings"
 
-	"t4mem/memory"
+	"github.com/t4db/t4mem/memory"
 )
 
 type Server struct {

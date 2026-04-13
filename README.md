@@ -155,7 +155,21 @@ Or run directly:
 go run ./cmd/t4memd -root ./.t4mem
 ```
 
-The server speaks newline-delimited JSON-RPC over stdio and supports:
+By default, `t4memd` now acts as a stdio MCP adapter. It auto-starts a
+background daemon that owns the local store lock and serves the same MCP
+JSON-RPC over a Unix domain socket. This lets multiple Codex/Claude threads
+share one `t4mem` root without tripping over Pebble's single-process lock.
+
+To run only the shared daemon yourself:
+
+```bash
+./t4memd -daemon -root ./.t4mem
+```
+
+The daemon socket defaults to `ROOT/daemon.sock`. Override it with `-socket`
+if you need to point multiple adapters at a different shared daemon.
+
+The MCP surface supports:
 
 - `initialize`
 - `tools/list`
@@ -181,6 +195,10 @@ Example MCP server entry using the built binary:
   }
 }
 ```
+
+The configured command stays the same even with the daemon architecture: the
+MCP host talks to `t4memd` over stdio, and `t4memd` connects to or auto-starts
+the shared local daemon behind the scenes.
 
 Example using `go run` during development:
 
