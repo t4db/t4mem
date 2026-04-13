@@ -129,6 +129,17 @@ instead of relying on the user to name individual MCP tools. The skill encodes:
 You can use the skill directly from the repo path or copy/install it into a
 Codex skills directory for auto-discovery.
 
+### Claude Equivalent
+
+The bundled skill format is Codex-specific. For Claude, use the same policy as
+project instructions in a `CLAUDE.md` file.
+
+This repo includes a Claude-ready version at
+[skills/t4mem-agent-memory/CLAUDE.md](/Users/amakhov/www/t4mem/skills/t4mem-agent-memory/CLAUDE.md).
+
+You can copy it into your project root as `CLAUDE.md`, or paste the parts you
+want into your existing Claude project instructions.
+
 ## Quick Start
 
 Build and run the MCP server:
@@ -184,6 +195,43 @@ Example using `go run` during development:
   }
 }
 ```
+
+### Claude Desktop Example
+
+Add `t4mem` to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "t4mem": {
+      "type": "stdio",
+      "command": "/absolute/path/to/t4memd",
+      "args": ["-root", "/absolute/path/to/t4mem/.t4mem"],
+      "env": {}
+    }
+  }
+}
+```
+
+You can also use `go run` during development by swapping the command and args
+to:
+
+```json
+{
+  "mcpServers": {
+    "t4mem": {
+      "type": "stdio",
+      "command": "go",
+      "args": ["run", "./cmd/t4memd", "-root", "./.t4mem"],
+      "env": {}
+    }
+  }
+}
+```
+
+If you want Claude to use `t4mem` proactively rather than waiting for explicit
+tool names, pair the MCP config above with a project `CLAUDE.md` based on
+[skills/t4mem-agent-memory/CLAUDE.md](/Users/amakhov/www/t4mem/skills/t4mem-agent-memory/CLAUDE.md).
 
 ### S3-Backed Durability
 
@@ -264,4 +312,3 @@ Data is laid out under prefixes like:
 - `/projects/<project_id>/state/<scope>/<scope_id>/<branch_id>/<field>`
 - `/projects/<project_id>/facts/<scope>/<scope_id>/<subject>/<predicate>/<fact_id>`
 - `/projects/<project_id>/checkpoints/<branch_id>/<checkpoint_id>`
-
