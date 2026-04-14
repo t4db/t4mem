@@ -1,0 +1,75 @@
+name: release-t4memd
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build-${{ matrix.goos }}-${{ matrix.goarch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: darwin
+            goarch: amd64
+          - goos: darwin
+            goarch: arm64
+          - goos: linux
+            goarch: amd64
+          - goos: linux
+            goarch: arm64
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Build binary
+        env:
+          CGO_ENABLED: "0"
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+        run: |
+          mkdir -p dist/${GOOS}_${GOARCH}
+          go build -trimpath -ldflags="-s -w" -o dist/${GOOS}_${GOARCH}/t4memd ./cmd/t4memd
+
+      - name: Package tarball
+        run: |
+          cd dist/${{ matrix.goos }}_${{ matrix.goarch }}
+          tar -czf ../t4memd_${{ matrix.goos }}_${{ matrix.goarch }}.tar.gz t4memd
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: t4memd_${{ matrix.goos }}_${{ matrix.goarch }}
+          path: dist/t4memd_${{ matrix.goos }}_${{ matrix.goarch }}.tar.gz
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+
+      - name: Flatten artifacts
+        run: |
+          mkdir -p release
+          find dist -name '*.tar.gz' -exec mv {} release/ \;
+          sha256sum release/*.tar.gz > release/t4memd_checksums.txt
+
+      - name: Publish release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/*.tar.gz
+            release/t4memd_checksums.txt

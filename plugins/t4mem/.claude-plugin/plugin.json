@@ -1,0 +1,21 @@
+{
+  "name": "t4mem",
+  "version": "0.1.0",
+  "description": "Branchable, durable agent memory for explainable work",
+  "author": {
+    "name": "t4db"
+  },
+  "homepage": "https://github.com/t4db/t4mem",
+  "repository": "https://github.com/t4db/t4mem",
+  "license": "MIT",
+  "keywords": [
+    "memory",
+    "mcp",
+    "agents",
+    "durable-memory",
+    "branching",
+    "traceability"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

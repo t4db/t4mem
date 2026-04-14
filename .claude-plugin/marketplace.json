@@ -1,0 +1,22 @@
+{
+  "name": "t4db-tools",
+  "owner": {
+    "name": "t4db"
+  },
+  "metadata": {
+    "description": "Claude Code marketplace for t4db plugins",
+    "version": "0.1.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "t4mem",
+      "source": "./plugins/t4mem",
+      "description": "Branchable, durable agent memory for explainable work",
+      "version": "0.1.0",
+      "author": {
+        "name": "t4db"
+      }
+    }
+  ]
+}

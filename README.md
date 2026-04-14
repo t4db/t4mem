@@ -181,6 +181,51 @@ Verify the repo:
 go test ./...
 ```
 
+## Codex Plugin
+
+This repo includes a local Codex plugin scaffold under
+[plugins/t4mem](/Users/amakhov/www/t4mem/plugins/t4mem).
+
+For distribution, prefer a release binary instead of `go run`. The plugin is
+wired to launch a local `t4memd` executable from the plugin's `bin/` directory
+and auto-installs that binary from GitHub Releases on first launch.
+
+If you want to preinstall the current platform binary manually:
+
+```bash
+./plugins/t4mem/scripts/install_t4memd_release.sh
+```
+
+Then the plugin can launch `t4memd` through its local wrapper script:
+
+```bash
+/bin/sh ./plugins/t4mem/scripts/launch_t4memd.sh
+```
+
+The launcher resolves the repo root automatically and uses `./.t4mem` as the
+memory store root for this checkout.
+
+## Claude Plugin Marketplace
+
+This repo also includes a Claude Code marketplace catalog at
+[.claude-plugin/marketplace.json](/Users/amakhov/www/t4mem/.claude-plugin/marketplace.json)
+and a Claude-compatible plugin manifest at
+[plugins/t4mem/.claude-plugin/plugin.json](/Users/amakhov/www/t4mem/plugins/t4mem/.claude-plugin/plugin.json).
+
+Once this repo is published on GitHub, the install flow is:
+
+```bash
+claude plugin marketplace add t4db/t4mem
+claude plugin install t4mem@t4db-tools
+```
+
+For local testing from a checkout:
+
+```bash
+claude plugin marketplace add /absolute/path/to/t4mem
+claude plugin install t4mem@t4db-tools
+```
+
 ## MCP Setup
 
 Example MCP server entry using the built binary:

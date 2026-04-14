@@ -1,0 +1,20 @@
+{
+  "name": "t4mem local plugins",
+  "interface": {
+    "displayName": "t4mem Local Plugins"
+  },
+  "plugins": [
+    {
+      "name": "t4mem",
+      "source": {
+        "source": "local",
+        "path": "./plugins/t4mem"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

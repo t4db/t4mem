@@ -1,3 +1,5 @@
 .idea
 .t4mem
 .t4mem-smoketest
+t4memd
+plugins/t4mem/bin/

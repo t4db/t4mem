@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "t4mem": {
+      "command": "/bin/sh",
+      "args": [
+        "./scripts/launch_t4memd.sh"
+      ],
+      "cwd": "/Users/amakhov/www/t4mem/plugins/t4mem",
+      "note": "Launches t4memd from the plugin bin directory and auto-installs the correct GitHub release binary on first run when needed."
+    }
+  }
+}
