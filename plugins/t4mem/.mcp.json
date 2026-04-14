@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "t4mem": {
-      "command": "./scripts/launch_t4memd.sh",
+      "command": "${CLAUDE_PLUGIN_ROOT}/scripts/launch_t4memd.sh",
       "args": [],
       "note": "Launches t4memd from the plugin bin directory and auto-installs the correct GitHub release binary on first run when needed."
     }

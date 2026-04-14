@@ -157,6 +157,10 @@ func ensureDaemon(ctx context.Context, rootDir, socketPath string) error {
 }
 
 func startDaemonProcess(rootDir, socketPath string) error {
+	if err := os.MkdirAll(rootDir, 0o755); err != nil {
+		return fmt.Errorf("create root dir %q: %w", rootDir, err)
+	}
+
 	logPath := filepath.Join(rootDir, "daemon.log")
 	logFile, err := os.OpenFile(logPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o600)
 	if err != nil {

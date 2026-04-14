@@ -58,9 +58,9 @@ else
   exit 1
 fi
 
-EXPECTED_SUM=$(awk "/ ${ASSET_BASENAME}\\.tar\\.gz$/ { print \$1 }" "$CHECKSUMS_FILE")
+EXPECTED_SUM=$(awk -v asset="${ASSET_BASENAME}.tar.gz" '$2 ~ ("(^|/)" asset "$") { print $1; exit }' "$CHECKSUMS_FILE")
 if [ -z "$EXPECTED_SUM" ]; then
-  echo "could not find checksum for ${ASSET_BASENAME}.tar.gz" >&2
+  echo "could not find checksum for ${ASSET_BASENAME}.tar.gz in $(basename "$CHECKSUMS_FILE")" >&2
   exit 1
 fi
 
