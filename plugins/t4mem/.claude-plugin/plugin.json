@@ -17,5 +17,11 @@
     "traceability"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": {
+    "t4mem": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/scripts/launch_t4memd.sh",
+      "args": [],
+      "note": "Launches t4memd from the installed plugin directory and auto-installs the correct GitHub release binary on first run when needed."
+    }
+  }
 }
